@@ -1,9 +1,39 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import axios, { AxiosRequestConfig } from "axios";
 
 const Home: NextPage = () => {
+  type customerData = {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    address: string;
+    role: boolean;
+  };
+
+  const onAdd = (data: customerData) => {
+    const options: AxiosRequestConfig<any> = {
+      url: "/api/customer",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      data: {
+        data,
+      },
+    };
+    axios(options)
+      .then((response: any) => {
+        console.log(response.data.message);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,12 +43,25 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <button
+          onClick={() =>
+            onAdd({
+              firstName: "andy",
+              lastName: "ibe",
+              phone: "09033275449",
+              address: "ozuoba",
+              role: false,
+            })
+          }
+        >
+          add
+        </button>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
@@ -59,14 +102,14 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
