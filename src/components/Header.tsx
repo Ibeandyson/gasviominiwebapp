@@ -1,5 +1,6 @@
 import React from "react";
-import { Nav, Navbar, Container,NavDropdown  } from "react-bootstrap";
+import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -12,7 +13,9 @@ const Header = () => {
             <Nav className="me-auto">
               <Nav.Link href="#features">Gas Attendance</Nav.Link>
               <NavDropdown title="Admin Panel" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Admin Protal</NavDropdown.Item>
+                <Link passHref href="/add_staff">
+                  <NavDropdown.Item>Add Staff</NavDropdown.Item>
+                </Link>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
                 </NavDropdown.Item>

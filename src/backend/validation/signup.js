@@ -12,35 +12,34 @@ module.exports = function validateRegisterInput(data){
     data.lastName = !isEmpty(data.lastName) ? data.lasttName: ""
     data.password = !isEmpty(data.password) ? data.password: "";
     data.password2 = !isEmpty(data.password2) ? data.password2: "";
+    data.role = !isEmpty(data.role) ? data.password2: "";
 
-    //username check
     if (Validator.isEmpty(data.username)){
         errors.username ="user name field is empty";
     }
-    
-    //email check
     if (Validator.isEmpty(data.email)){
         errors.email ="email field is empty";
     }else if (!Validator.isEmail(data.email)){
         errors.email = "email is invalid";
     }
-    // address check
     if(Validator.isEmpty(data.address)){
         errors.address = "address field is empty";
     }
-    //phone check
     if (Validator.isEmpty(data.phone)){
         errors.phone = "phone field is empty";
     }
-    // password check
-    if (Validator.isEmpty(data.password)){
-        errors.password = "password can not be empty"
-    }
+  
     if (Validator.isEmpty(data.firstName)){
         errors.firstName = "first name can not empty";
     }
     if (Validator.isEmpty(data.lastName)){
         errors.lasttName = "last name can not empty";
+    }
+    if (Validator.isEmpty(data.role)){
+        errors.role = "password can not be empty"
+    }
+    if (Validator.isEmpty(data.password)){
+        errors.password = "password can not be empty"
     }
     if (Validator.isEmpty(data.password2)){
         errors.password2 = "comfirm password field is required";

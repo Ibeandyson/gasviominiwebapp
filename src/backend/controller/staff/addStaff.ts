@@ -20,6 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const address = req.body.data.address
     const firstName = req.body.data.firstName
     const lastName = req.body.data.lastName
+    const role = req.body.data.role
 
 
     try {
@@ -36,7 +37,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     address: address,
                     firstName: firstName,
                     lastName: lastName,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    role: role
                 }
             );
             return res.status(200).json({
