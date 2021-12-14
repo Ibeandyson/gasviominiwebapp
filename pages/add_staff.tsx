@@ -65,7 +65,6 @@ const AddStaff: NextPage = () => {
               </p>
             </Card.Header>
             <Card.Body>
-              <Form>
                 <Row>
                   <Col sm={12} md={4}>
                     <Form.Group
@@ -176,10 +175,11 @@ const AddStaff: NextPage = () => {
                     <Form.Select
                       className="mb-5 mt-3"
                       name="role"
+                      value={role}
                       onChange={(e) => onChangeHandler(e)}
                     >
-                      <option disabled>{">>> Choose Role <<<"} </option>
-                      <option value="attendance">Gas Attendce</option>
+                      <option hidden>{">>> Choose Role <<<"} </option>
+                      <option value="attendant">Gas Attendant</option>
                       <option value="admin">Admin</option>
                     </Form.Select>
                   </Col>
@@ -195,7 +195,6 @@ const AddStaff: NextPage = () => {
                     </div>
                   </Col>
                 </Row>
-              </Form>
             </Card.Body>
           </Card>
         </main>
