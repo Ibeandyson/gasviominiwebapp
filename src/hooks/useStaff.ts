@@ -1,3 +1,4 @@
+import { useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import useNotify from "../hooks/useNotify"
 
@@ -13,10 +14,12 @@ interface addStaffProps {
 	role: string;
 };
 const useStaff = () => {
+	const [loading, setLoading] = useState(false)
 	const { useShowNotify } = useNotify()
 
 
 	const addStaff = (data: addStaffProps) => {
+		setLoading(true)
 		const options: AxiosRequestConfig<any> = {
 			url: "/api/staff",
 			method: "POST",
@@ -33,8 +36,10 @@ const useStaff = () => {
 				if (response.status === 200) {
 					useShowNotify(response.data?.message, "success")
 				}
+				setLoading(false)
 			})
 			.catch((err: any) => {
+				setLoading(false)
 				if (err.response.status === 400) {
 					if (err.response?.data.email) {
 						useShowNotify(err.response?.data.email, "error")
@@ -72,6 +77,7 @@ const useStaff = () => {
 	};
 	return {
 		addStaff,
+		loading: loading,
 	}
 }
 export default useStaff
