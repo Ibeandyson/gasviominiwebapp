@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
-    const { errors, isValid }: any = validateRegisterInput(req.body.data);
+    const { errors, isValid } = validateRegisterInput(req.body.data);
     if (!isValid) {
         return res.status(400).json(errors);
     }

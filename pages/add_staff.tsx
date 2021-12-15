@@ -42,6 +42,7 @@ const AddStaff: NextPage = () => {
   const onChangeHandler = (e: any) => {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
+  
   const { addStaff, loading } = useStaff();
   const onSubmit = (e: any) => {
     e.preventDefault();

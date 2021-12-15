@@ -1,10 +1,34 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
 import { Form, Button, Card } from "react-bootstrap";
-import { Header } from "../src/components";
+import { Header, Loader } from "../src/components";
+import useLogin from "../src/hooks/useLogin";
+
+
+type formData = {
+  email: string;
+  password: string;
+};
 
 const Home: NextPage = () => {
+  const [formInput, setFormInput] = useState<formData>({
+    email: "",
+    password: "",
+  });
+  const { email, password } = formInput;
+
+  const onChangeHandler = (e: any) => {
+    setFormInput({ ...formInput, [e.target.name]: e.target.value });
+  };
+
+  const { login, loading } = useLogin();
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    login(formInput);
+  };
+
   return (
     <div>
       <Head>
@@ -13,33 +37,40 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      {loading && <Loader />}
       <div className={styles.container}>
-      <main className={styles.main}>
-        <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-          <Card.Body>
-            <Form>
+        <main className={styles.main}>
+          <Card className="shadow-sm p-3 mb-5 bg-body rounde">
+            <Card.Body>
               <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
                 <Form.Control
                   className="form"
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => onChangeHandler(e)}
                 />
               </Form.Group>
-
               <Form.Group className="mb-5 mt-3" controlId="formBasicPassword">
-                <Form.Control type="password" placeholder="Enter Password" />
+                <Form.Control
+                  className="form"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => onChangeHandler(e)}
+                />
               </Form.Group>
               <div className="d-grid">
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={onSubmit}>
                   Log in
                 </Button>
               </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      </main>
+            </Card.Body>
+          </Card>
+        </main>
       </div>
-     
     </div>
   );
 };
