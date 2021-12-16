@@ -7,20 +7,18 @@ import { Header, Loader } from "../src/components";
 import QRCode from "react-qr-code";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
+import useCreateId from "../src/hooks/useCreateId";
 
 const Home: NextPage = () => {
-  const [id, setId] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const onCreateId = () => {
-    setId("uyjklpiouu");
-  };
+  const { uid, createId, setUid } = useCreateId();
 
   const downloadHandler = (event: any) => {
     event.preventDefault();
-    domtoimage.toBlob(document.getElementById("qr-code", {width: 1080, height: 1080})).then((blob) => {
-      saveAs(blob, `${id}`);
-    });
+    domtoimage
+      .toBlob(document.getElementById("qr-code", { width: 1080, height: 1080 }))
+      .then((blob) => {
+        saveAs(blob, `${uid}`);
+      });
   };
 
   return (
@@ -31,7 +29,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {loading && <Loader />}
       <div className={styles.container}>
         <main className={styles.main}>
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
@@ -41,17 +38,24 @@ const Home: NextPage = () => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              {id.length > 2 ? (
+              {uid.length > 2 ? (
                 <div className="text-center">
-                  <div id="qr-code" style={{backgroundColor: "#ffffff", paddingTop: "20px", paddingBottom: "20px"}}>
-                    <QRCode value={id} />
+                  <div
+                    id="qr-code"
+                    style={{
+                      backgroundColor: "#ffffff",
+                      paddingTop: "20px",
+                      paddingBottom: "20px",
+                    }}
+                  >
+                    <QRCode value={uid} />
                   </div>
 
                   <div className="btn-group" role="group">
                     <Button
                       className="mb-3 mt-3 pr-2"
                       variant="danger"
-                      onClick={() => setId("")}
+                      onClick={() => setUid("")}
                     >
                       Clear
                     </Button>
@@ -69,7 +73,7 @@ const Home: NextPage = () => {
                   <Button
                     className="mb-3 mt-3"
                     variant="primary"
-                    onClick={onCreateId}
+                    onClick={createId}
                   >
                     Generate new QR code
                   </Button>
