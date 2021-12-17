@@ -18,6 +18,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const firstName = req.body.data.firstName
     const lastName = req.body.data.lastName
     const role = req.body.data.role
+    const date: any =  new Date(Date.now())
+    const nowDate =  date.toString()
 
     try {
         let { db } = await connectToDatabase();
@@ -35,7 +37,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 firstName: firstName,
                 lastName: lastName,
                 password: hashedPassword,
-                role: role
+                role: role,
+                created_at: nowDate ,
             }
         );
         return res.status(200).json({

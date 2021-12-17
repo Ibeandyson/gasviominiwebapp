@@ -4,33 +4,34 @@ import Head from "next/head";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import styles from "../styles/AddStaff.module.css";
-import useStaff from "../src/hooks/useStaff";
+import useCustomer from "../src/hooks/useCustomer";
 
 type formData = {
+  _id: string;
   email: string;
   phone: string;
   address: string;
   firstName: string;
   lastName: string;
-  qrCode: string;
   cylinderSize: string;
   cylinderAge: string;
   dob: string;
 };
 
-const AddStaff: NextPage = () => {
+const AddCustomer: NextPage = () => {
   const [formInput, setFormInput] = useState<formData>({
+    _id: "RETITRT59dsd",
     email: "",
     phone: "",
     address: "",
     firstName: "",
     lastName: "",
-    qrCode: "",
     cylinderSize: "",
     cylinderAge: "",
     dob: "",
   });
   const {
+    _id,
     email,
     phone,
     address,
@@ -39,17 +40,16 @@ const AddStaff: NextPage = () => {
     dob,
     cylinderAge,
     cylinderSize,
-    qrCode,
   } = formInput;
 
   const onChangeHandler = (e: any) => {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
-  const { addStaff, loading } = useStaff();
+  const { addCustomer, loading } = useCustomer();
   const onSubmit = (e: any) => {
     e.preventDefault();
-    // addStaff(formInput);
+    addCustomer(formInput);
   };
 
   return (
@@ -66,7 +66,7 @@ const AddStaff: NextPage = () => {
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
             <Card.Header>
             <Card.Title>
-                <b>Add Staff</b>
+                <b>Add Customer</b>
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -135,8 +135,8 @@ const AddStaff: NextPage = () => {
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
                     <Form.Control
                       className="form"
-                      type="password"
-                      placeholder="Password"
+                      type="date"
+                      placeholder="DOB"
                       name="dob"
                       value={dob}
                       onChange={(e) => onChangeHandler(e)}
@@ -147,9 +147,10 @@ const AddStaff: NextPage = () => {
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
                     <Form.Control
                       className="form"
-                      type="password"
-                      placeholder="Comfirm Password"
+                      type="number"
+                      placeholder="Cylinder Age"
                       name="cylinderAge"
+                      min="1"
                       value={cylinderAge}
                       onChange={(e) => onChangeHandler(e)}
                     />
@@ -159,9 +160,10 @@ const AddStaff: NextPage = () => {
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
                     <Form.Control
                       className="form"
-                      type="password"
-                      placeholder="Comfirm Password"
+                      type="number"
+                      placeholder="Cylinder Size"
                       name="cylinderSize"
+                      min="1"
                       value={cylinderSize}
                       onChange={(e) => onChangeHandler(e)}
                     />
@@ -188,4 +190,4 @@ const AddStaff: NextPage = () => {
   );
 };
 
-export default AddStaff;
+export default AddCustomer;
