@@ -5,6 +5,10 @@ import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import styles from "../styles/AddStaff.module.css";
 import useCustomer from "../src/hooks/useCustomer";
+import dynamic from "next/dynamic";
+const QrReader = dynamic(() => import("react-qr-reader"), {
+  ssr: false,
+});
 
 type formData = {
   _id: string;
@@ -20,7 +24,7 @@ type formData = {
 
 const AddCustomer: NextPage = () => {
   const [formInput, setFormInput] = useState<formData>({
-    _id: "RETITRT59dsd",
+    _id: "",
     email: "",
     phone: "",
     address: "",
@@ -46,6 +50,15 @@ const AddCustomer: NextPage = () => {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   };
 
+  const handleScan = (data: any) => {
+    if (data) {
+      setFormInput({ ...formInput, _id: data });
+    }
+  };
+  const handleError = (err: any) => {
+    console.error(err);
+  };
+
   const { addCustomer, loading } = useCustomer();
   const onSubmit = (e: any) => {
     e.preventDefault();
@@ -65,123 +78,164 @@ const AddCustomer: NextPage = () => {
         <main className={styles.main}>
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
             <Card.Header>
-            <Card.Title>
-                <b>Add Customer</b>
+              <Card.Title>
+                <b>Register Customer</b>
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <Row>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="text"
-                      placeholder="First Name"
-                      name="firstName"
-                      value={firstName}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="text"
-                      placeholder="Last Name"
-                      name="lastName"
-                      value={lastName}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="number"
-                      placeholder="Phone"
-                      name="phone"
-                      value={phone}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="text"
-                      placeholder="Address"
-                      name="address"
-                      value={address}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="date"
-                      placeholder="DOB"
-                      name="dob"
-                      value={dob}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="number"
-                      placeholder="Cylinder Age"
-                      name="cylinderAge"
-                      min="1"
-                      value={cylinderAge}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={4}>
-                  <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                    <Form.Control
-                      className="form"
-                      type="number"
-                      placeholder="Cylinder Size"
-                      name="cylinderSize"
-                      min="1"
-                      value={cylinderSize}
-                      onChange={(e) => onChangeHandler(e)}
-                    />
-                  </Form.Group>
-                </Col>
-
-                <Col sm={12} md={4}>
-                  <div style={{ float: "right" }}>
-                    <Button
-                      className="mb-5 mt-3"
-                      variant="primary"
-                      onClick={onSubmit}
-                    >
-                      Add Customer
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
+              {_id.length < 1 ? (
+                <div>
+                  <Row>
+                    <Col sm={12} md={12}>
+                      <div className="mb-3 mt-3 text-center">
+                        <QrReader
+                          delay={300}
+                          onScan={(val) => handleScan(val)}
+                          onError={handleError}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              ) : (
+                <div>
+                  <Row>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="text"
+                          placeholder="First Name"
+                          name="firstName"
+                          value={firstName}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="text"
+                          placeholder="Last Name"
+                          name="lastName"
+                          value={lastName}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="number"
+                          placeholder="Phone"
+                          name="phone"
+                          value={phone}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="text"
+                          placeholder="Address"
+                          name="address"
+                          value={address}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="email"
+                          placeholder="Email"
+                          name="email"
+                          value={email}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="date"
+                          placeholder="DOB"
+                          name="dob"
+                          value={dob}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="number"
+                          placeholder="Cylinder Age"
+                          name="cylinderAge"
+                          min="1"
+                          value={cylinderAge}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <Form.Group
+                        className="mb-5 mt-3"
+                        controlId="formBasicEmail"
+                      >
+                        <Form.Control
+                          className="form"
+                          type="number"
+                          placeholder="Cylinder Size"
+                          name="cylinderSize"
+                          min="1"
+                          value={cylinderSize}
+                          onChange={(e) => onChangeHandler(e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col sm={12} md={4}>
+                      <div className="text-center">
+                        <Button
+                          className="mb-5 mt-3"
+                          variant="primary"
+                          onClick={onSubmit}
+                        >
+                          Register Customer
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </main>

@@ -27,7 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         let { db } = await connectToDatabase();
-
         if (await db.collection("customer").findOne({ email })) {
             return res.status(403).json({ emailError: 'The email has already been used' });
         }
@@ -43,7 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 cylinderSize:  cylinderSize,
                 cylinderAge:  cylinderAge,
                 dob: dob,
-                created_at: nowDate ,
+                created_at: nowDate,
             }
         );
 

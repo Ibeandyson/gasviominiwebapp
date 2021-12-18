@@ -16,16 +16,17 @@ const Header = () => {
                 <Link passHref href="/add_staff">
                   <NavDropdown.Item>Add Staff</NavDropdown.Item>
                 </Link>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
+                <Link passHref href="/add_customer">
+                  <NavDropdown.Item>Register New Customer</NavDropdown.Item>
+                </Link>
+                <NavDropdown.Divider />
+                <Link passHref href="/create_qr_code">
+                  <NavDropdown.Item>Genarate QR Code</NavDropdown.Item>
+                </Link>
+
+                <NavDropdown.Divider />
+                <NavDropdown.Item>Separated link</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <Nav>
