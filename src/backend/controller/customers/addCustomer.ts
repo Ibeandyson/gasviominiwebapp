@@ -47,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         );
 
         return res.status(200).json({
-            message: 'Staff added successfully',
+            message: 'Customer added successfully',
             success: true,
         });
       
