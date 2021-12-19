@@ -13,6 +13,9 @@ interface addCustomerProps {
     cylinderSize: string;
     cylinderAge: string;
     dob: string;
+    staffFirstName: string;
+    staffLastName: string;
+    staffRole: string;
 };
 const useCustomer = () => {
 	const [loading, setLoading] = useState(false)
@@ -71,7 +74,13 @@ const useCustomer = () => {
 					useShowNotify("something went bad contact the engineer", "error")
 				}
 				if(err.response.status === 403){
-					useShowNotify(err.response?.data.emailError, "error")
+                    if(err.response?.data.emailError){
+                        useShowNotify(err.response?.data.emailError, "error")
+                    }
+                    if(err.response?.data.qrCodeError){
+                        useShowNotify(err.response?.data.qrCodeError, "error")
+                    }
+					
 				}
 			});
 	};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
@@ -6,6 +6,7 @@ import { Header, Loader } from "../src/components";
 import styles from "../styles/AddStaff.module.css";
 import useCustomer from "../src/hooks/useCustomer";
 import dynamic from "next/dynamic";
+import crypto from "crypto";
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
@@ -20,6 +21,9 @@ type formData = {
   cylinderSize: string;
   cylinderAge: string;
   dob: string;
+  staffFirstName: string;
+  staffLastName: string;
+  staffRole: string;
 };
 
 const AddCustomer: NextPage = () => {
@@ -33,7 +37,11 @@ const AddCustomer: NextPage = () => {
     cylinderSize: "",
     cylinderAge: "",
     dob: "",
+    staffFirstName: "",
+    staffLastName: "",
+    staffRole: "",
   });
+
   const {
     _id,
     email,
@@ -64,6 +72,38 @@ const AddCustomer: NextPage = () => {
     e.preventDefault();
     addCustomer(formInput);
   };
+
+  //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
+  let aeskey = "MvYiDO2ePasOLVcN";
+  let ivKey = "RQBblIzmI3UhH0N9";
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      let data: any = localStorage.getItem("staff_data");
+      const md5Key = crypto
+        .createHash("md5")
+        .update(aeskey)
+        .digest("hex")
+        .substr(0, 24);
+      const decipher = crypto.createDecipheriv(
+        "des-ede3",
+        md5Key,
+        ivKey,
+        aeskey
+      );
+      let decrypted = decipher.update(data, "base64", "utf8");
+      decrypted += decipher.final("utf8");
+      const _staffData = JSON.parse(decrypted);
+      setFormInput({
+        ...formInput,
+        staffFirstName: _staffData.firstName,
+        staffLastName: _staffData.lastName,
+        staffRole: _staffData.role,
+      });
+    } else {
+      return null;
+    }
+  }, []);
 
   return (
     <div>

@@ -18,10 +18,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const lastName = req.body.data.lastName
     const cylinderSize = req.body.data.cylinderSize
     const cylinderAge = req.body.data.cylinderAge
-    const id = req.body.data._id
+    const _id = req.body.data._id
     const dob = req.body.data.dob
-    const date: any =  new Date(Date.now())
-    const nowDate =  date.toString()
+    const staffFirstName = req.body.data.staffFirstName
+    const staffLastName = req.body.data.staffLastName
+    const staffRole = req.body.data.staffRole
+    const date: any = new Date(Date.now())
+    const nowDate = date.toString()
 
 
 
@@ -30,19 +33,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         if (await db.collection("customer").findOne({ email })) {
             return res.status(403).json({ emailError: 'The email has already been used' });
         }
+        if (await db.collection("customer").findOne({ _id })) {
+            return res.status(403).json({ qrCodeError: 'The QR Code already been used' });
+        }
 
         await db.collection('customer').insertOne(
             {
-                _id: id,
+                _id: _id,
                 email: email,
                 phone: phone,
                 address: address,
                 firstName: firstName,
                 lastName: lastName,
-                cylinderSize:  cylinderSize,
-                cylinderAge:  cylinderAge,
+                cylinderSize: cylinderSize,
+                cylinderAge: cylinderAge,
                 dob: dob,
                 created_at: nowDate,
+                staffData: {
+                    lastName: staffLastName,
+                    firstName: staffFirstName,
+                    role: staffRole
+                }
+
             }
         );
 
@@ -50,7 +62,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             message: 'Customer added successfully',
             success: true,
         });
-      
+
 
     } catch (error: any) {
         return res.status(500).json({
