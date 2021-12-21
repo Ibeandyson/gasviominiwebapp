@@ -51,9 +51,9 @@ const GasPurchase: NextPage = () => {
     lastRefillDate: "",
     lastRefillKg: "",
   });
-  const { lastRefillDate, lastRefillKg }: any = lastFillData;
+ 
 
-  const { user_id, email, amount, refillKg } = formInput;
+  const { user_id, amount, refillKg } = formInput;
 
   const { loading, getOneUser, oneCustomerData, updateOneUser } = useCustomer();
 
@@ -96,8 +96,9 @@ const GasPurchase: NextPage = () => {
     e.preventDefault();
     saleGas(formInput);
     updateOneUser({
-      lastRefillDate: lastRefillDate,
-      lastRefillKg: lastRefillKg,
+      lastRefillDate:  new Date(Date.now()),
+      lastRefillKg: refillKg,
+      user_id: user_id
     });
   };
 
