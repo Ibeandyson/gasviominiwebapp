@@ -24,6 +24,10 @@ const Header = () => {
                 <Link passHref href="/create_qr_code">
                   <NavDropdown.Item>Genarate QR Code</NavDropdown.Item>
                 </Link>
+                <NavDropdown.Divider />
+                <Link passHref href="/gas_purchase">
+                  <NavDropdown.Item>Gas Purchase</NavDropdown.Item>
+                </Link>
 
                 <NavDropdown.Divider />
                 <NavDropdown.Item>Separated link</NavDropdown.Item>

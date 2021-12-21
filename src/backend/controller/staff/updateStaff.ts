@@ -6,11 +6,17 @@ type resData = {
     success: boolean;
 }
 export default async (req: NextApiRequest, res: NextApiResponse<resData>) => {
+    const lastRefillDate = req.body.data.lastRefillDate;
+    const lastRefillKg = req.body.data.lastRefillKg
+
     try {
         let { db } = await connectToDatabase();
-        await db.collection('staff').insertOne(req.body.data);
+        await db.collection('customer').updateOne({
+            lastRefillDate: lastRefillDate,
+            lastRefillKg: lastRefillKg
+        });
         return res.status(200).json({
-            message: 'Customer added successfully',
+            message: 'Updated customer data successfully',
             success: true,
         });
     } catch (error: any) {

@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from "../../../../lib/mongodb";
-import validateCustomerInput from '../../Validation/customer'
+import validateSaleGasInput from '../../Validation/saleGas'
 
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
-	const { errors, isValid } = validateCustomerInput(req.body.data);
+	const { errors, isValid } = validateSaleGasInput(req.body.data);
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
@@ -17,26 +17,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const lastName = req.body.data.lastName
 	const cylinderSize = req.body.data.cylinderSize
 	const cylinderAge = req.body.data.cylinderAge
-	const _id = req.body.data._id
-	const dob = req.body.data.dob
+	const user_id = req.body.data.user_id
 	const staffFirstName = req.body.data.staffFirstName
 	const staffLastName = req.body.data.staffLastName
 	const staffRole = req.body.data.staffRole
+	const refillDate = new Date(Date.now())
+	const refillKg = req.body.data.refillKg
+	const amount = req.body.data.amount
+
 	const date: any = new Date(Date.now())
 	const nowDate = date.toString()
 
 	try {
 		let { db } = await connectToDatabase();
-		if (await db.collection("customer").findOne({ email })) {
-			return res.status(403).json({ emailError: 'The email has already been used' });
-		}
-		if (await db.collection("customer").findOne({ _id })) {
-			return res.status(403).json({ qrCodeError: 'The QR Code already been used' });
-		}
-
-		await db.collection('customer').insertOne(
+		await db.collection('gas_purchased').insertOne(
 			{
-				_id: _id,
+				user_id: user_id,
 				email: email,
 				phone: phone,
 				address: address,
@@ -44,12 +40,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				lastName: lastName,
 				cylinderSize: cylinderSize,
 				cylinderAge: cylinderAge,
-				dob: dob,
 				created_at: nowDate,
 				purchase: {
-					lastRefillDate: "",
-					lastRefillKg: "",
-				},	
+					refillKg: refillKg,
+					amount: amount,
+					refillDate: refillDate
+				},
 				staffData: {
 					lastName: staffLastName,
 					firstName: staffFirstName,
@@ -60,7 +56,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		);
 
 		return res.status(200).json({
-			message: 'Customer added successfully',
+			message: 'Gas purchased successfully',
 			success: true,
 		});
 

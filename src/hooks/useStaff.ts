@@ -13,6 +13,23 @@ interface addStaffProps {
 	password2: string;
 	role: string;
 };
+
+interface saleGasProps {
+	user_id: string;
+	email: string;
+	phone: string;
+	address: string;
+	firstName: string;
+	lastName: string;
+	cylinderSize: string;
+	cylinderAge: string;
+	staffFirstName: string;
+	staffLastName: string;
+	staffRole: string;
+	refillDate: string;
+	refillKg: string;
+	amount: string;
+};
 const useStaff = () => {
 	const [loading, setLoading] = useState(false)
 	const { useShowNotify } = useNotify()
@@ -67,16 +84,53 @@ const useStaff = () => {
 					}
 
 				}
-				if(err.response.status === 500){
+				if (err.response.status === 500) {
 					useShowNotify("something went bad contact the engineer", "error")
 				}
-				if(err.response.status === 403){
+				if (err.response.status === 403) {
 					useShowNotify(err.response?.data.emailError, "error")
+				}
+			});
+	};
+
+	const saleGas = (data: saleGasProps) => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: "/api/sale_gas",
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			},
+			data: {
+				data,
+			},
+		};
+		axios(options)
+			.then((response: any) => {
+				if (response.status === 200) {
+					useShowNotify(response.data?.message, "success")
+				}
+				setLoading(false)
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 400) {
+					if (err.response?.data.amount) {
+						useShowNotify(err.response?.data.amount, "error")
+					}
+					if (err.response?.data.refillKg) {
+						useShowNotify(err.response?.data.refillKg, "error")
+					}
+				}
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
 				}
 			});
 	};
 	return {
 		addStaff,
+		saleGas,
 		loading: loading,
 	}
 }

@@ -22,5 +22,9 @@ export default async function handler(req: any, res: any) {
     case "DELETE": {
       return deleteCustomer(req, res);
     }
+    
+    case "UPDATE": {
+      return deleteCustomer(req, res);
+    }
   }
 }
