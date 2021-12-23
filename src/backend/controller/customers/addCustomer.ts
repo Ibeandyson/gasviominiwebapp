@@ -47,8 +47,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				dob: dob,
 				created_at: nowDate,
 				purchase: {
-					lastRefillDate: "",
-					lastRefillKg: "",
+					lastRefillDate: "none",
+					lastRefillKg: "none",
 				},	
 				staffData: {
 					lastName: staffLastName,

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
-import { Header, Loader } from "../src/components";
+import { Header, Loader, CustomerModal } from "../src/components";
 import styles from "../styles/AddStaff.module.css";
 import useCustomer from "../src/hooks/useCustomer";
 import useStaff from "../src/hooks/useStaff";
 import dynamic from "next/dynamic";
 import crypto from "crypto";
+import useModal from "../src/hooks/useModal"
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
@@ -30,6 +31,7 @@ type formData = {
 };
 
 const GasPurchase: NextPage = () => {
+  const { setModaleState } = useModal()
   const [formInput, setFormInput] = useState<formData>({
     user_id: "",
     email: "",
@@ -90,6 +92,7 @@ const GasPurchase: NextPage = () => {
       lastRefillDate: oneCustomerData?.purchase?.lastRefillDate,
       lastRefillKg: oneCustomerData?.purchase?.lastRefillKg,
     });
+    // setModaleState(true)  
   }, [oneCustomerData]);
 
   const onSubmit = (e: any) => {
@@ -143,6 +146,7 @@ const GasPurchase: NextPage = () => {
       </Head>
       <Header />
       {loading && <Loader />}
+      <CustomerModal/>
       <div className={styles.container}>
         <main className={styles.main}>
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">

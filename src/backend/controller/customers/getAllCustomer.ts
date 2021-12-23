@@ -3,16 +3,12 @@ import { connectToDatabase } from "../../../../lib/mongodb";
 
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-
-    const id = req.body
-  
     try {
         let { db } = await connectToDatabase();
-        // const data = await db.collection('customer').find({ "_id": id })
-        // console.log(data)
-        console.log("id", id)
+        const data = await db.collection('customer').find({}).toArray()
+        console.log("data", data)
         return res.status(200).json({
-            data: '',
+            data: data,
             success: true,
         });
     } catch (error: any) {
