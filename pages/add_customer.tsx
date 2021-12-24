@@ -237,10 +237,9 @@ const AddCustomer: NextPage = () => {
                       >
                         <Form.Control
                           className="form"
-                          type="number"
+                          type="date"
                           placeholder="Cylinder Age"
                           name="cylinderAge"
-                          min="1"
                           value={cylinderAge}
                           onChange={(e) => onChangeHandler(e)}
                         />

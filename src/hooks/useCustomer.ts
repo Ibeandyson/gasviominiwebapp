@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import useNotify from "../hooks/useNotify"
 import useModal from "../hooks/useModal"
-import customer from "../backend/Validation/customer";
+
 
 
 interface addCustomerProps {
@@ -25,7 +25,7 @@ interface addCustomerProps {
 const useCustomer = () => {
   const [loading, setLoading] = useState(false)
   const [oneCustomer, setOneCustomer] = useState({})
-  const [customer, setCustomer] = useState({})
+  const [customer, setCustomer] = useState([])
   const { useShowNotify } = useNotify()
   const { setModalShow } = useModal()
 
@@ -107,7 +107,7 @@ const useCustomer = () => {
     axios(options)
       .then((response: any) => {
         setLoading(false)
-        setCustomer(response.data.data)
+        setOneCustomer(response.data.data)
         setModalShow(true)
       })
       .catch((err: any) => {
@@ -134,7 +134,6 @@ const useCustomer = () => {
     axios(options)
       .then((response: any) => {
         setLoading(false)
-        setOneCustomer(response.data.data)
       })
       .catch((err: any) => {
         setLoading(false)
@@ -166,11 +165,38 @@ const useCustomer = () => {
         }
       });
   }
+
+  const fillerCustomer = (data: any) => {
+    setLoading(true)
+
+    const options: AxiosRequestConfig<any> = {
+      url: `/api/fillter_customer/${data.name}?keyword=${data.keyword}`,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      }
+    };
+    axios(options)
+      .then((response: any) => {
+        setLoading(false)
+        setCustomer(response.data.data)
+        setModalShow(true)
+      })
+      .catch((err: any) => {
+        setLoading(false)
+        if (err.response.status === 500) {
+          useShowNotify("something went bad contact the engineer", "error")
+        }
+      });
+  }
+
   return {
     addCustomer,
     getOneUser,
     updateOneUser,
     getAllCustomer,
+    fillerCustomer,
     oneCustomerData: oneCustomer,
     customerData: customer,
     loading: loading,
