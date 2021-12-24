@@ -6,7 +6,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         let { db } = await connectToDatabase();
         const data = await db.collection('customer').find({}).toArray()
-        console.log("data", data)
         return res.status(200).json({
             data: data,
             success: true,

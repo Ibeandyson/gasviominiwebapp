@@ -147,13 +147,7 @@ const Customers: NextPage = () => {
               </div>
 
               <div className="text-center">
-                <Button
-                  className="mb-3 mt-3"
-                  variant="primary"
-                  onClick={() => fillerCustomer(query)}
-                >
-                  get users
-                </Button>
+                
               </div>
             </Card.Body>
           </Card>

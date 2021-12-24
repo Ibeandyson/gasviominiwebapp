@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse,) => {
 		}
 
 		if (name === "lastRefillKg") {
-			const data = await db.collection('customer').find({ purchase: { cylinderSize: keyword } }).toArray()
+			const data = await db.collection('customer').find({ 'purchase.lastRefillKg':  keyword }).toArray()
 			return res.status(200).json({
 				data: data,
 				success: true,
