@@ -14,6 +14,7 @@ import {
 import { Header, Loader } from "../src/components";
 import useCustomer from "../src/hooks/useCustomer";
 import Moment from "react-moment";
+import useWithAuth from "../src/hooks/useWithAuth";
 
 const Customers: NextPage = () => {
   const [query, setQuery] = useState({
@@ -46,7 +47,7 @@ const Customers: NextPage = () => {
             </Card.Header>
             <Card.Body>
               <div>
-                <InputGroup className="mb-5">
+                <InputGroup className="mb-4 mt-3">
                   <SplitButton
                     variant="primary"
                     title="Apply"
@@ -80,13 +81,13 @@ const Customers: NextPage = () => {
                     >
                       By Age of cylinder
                     </Dropdown.Item>
-										<Dropdown.Divider />
+                    <Dropdown.Divider />
                     <Dropdown.Item
                       onClick={() =>
                         setQuery({ ...query, name: "lastRefillKg" })
                       }
                     >
-                     By Last Refilled Kg
+                      By Last Refilled Kg
                     </Dropdown.Item>
                   </SplitButton>
                   <FormControl
@@ -98,9 +99,9 @@ const Customers: NextPage = () => {
                 </InputGroup>
               </div>
               <div className="table-responsive">
-                <Table striped bordered hover size="sm">
+                <table className="table table-striped">
                   <thead>
-                    <tr style={{ width: "500px", fontSize: "15px" }}>
+                    <tr style={{ width: "100%", fontSize: "13px" }}>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Email</th>
@@ -115,40 +116,39 @@ const Customers: NextPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {customerData?.map((data: any) => (
-                      <tr style={{ fontSize: "15px" }} key={data._id}>
-                        <td>{data.firstName}</td>
-                        <td>{data.lastName}</td>
-                        <td>{data.email}</td>
-                        <td>{data.address}</td>
-                        <td>{data.phone}</td>
-                        <td>{data.cylinderSize} Kg</td>
-                        <td>
-                          <Moment fromNow ago>
-                            {data.cylinderAge}
-                          </Moment>
-                        </td>
-                        {data.purchase.lastRefillDate === "none" ? (
-                          <td>{data.purchase.lastRefillDate}</td>
-                        ) : (
+                    {customerData[0] !== null ?
+                      customerData?.map((data: any) => (
+                        <tr style={{ fontSize: "13px" }} key={data?._id}>
+                          <td>{data?.firstName}</td>
+                          <td>{data?.lastName}</td>
+                          <td>{data?.email}</td>
+                          <td>{data?.address}</td>
+                          <td>{data?.phone}</td>
+                          <td>{data?.cylinderSize} Kg</td>
                           <td>
-                            <Moment fromNow>
-                              {data.purchase.lastRefillDate}
+                            <Moment fromNow ago>
+                              {data?.cylinderAge}
                             </Moment>
                           </td>
-                        )}
-                        <td>{data.purchase.lastRefillKg} kg</td>
-                        <td>{data.staffData.firstName}</td>
-                        <td>{data.staffData.role}</td>
-                      </tr>
-                    ))}
+                          {data?.purchase?.lastRefillDate === "none" ? (
+                            <td>{data?.purchase?.lastRefillDate}</td>
+                          ) : (
+                            <td>
+                              <Moment fromNow>
+                                {data?.purchase?.lastRefillDate}
+                              </Moment>
+                            </td>
+                          )}
+                          <td>{data?.purchase?.lastRefillKg} kg</td>
+                          <td>{data?.staffData?.firstName}</td>
+                          <td>{data?.staffData?.role}</td>
+                        </tr>
+                      )): null}
                   </tbody>
-                </Table>
+                </table>
               </div>
 
-              <div className="text-center">
-                
-              </div>
+              <div className="text-center"></div>
             </Card.Body>
           </Card>
         </main>
@@ -157,4 +157,4 @@ const Customers: NextPage = () => {
   );
 };
 
-export default Customers;
+export default useWithAuth(Customers, true);

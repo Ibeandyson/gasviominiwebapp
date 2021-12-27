@@ -12,6 +12,7 @@ import useModal from "../src/hooks/useModal"
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
+import useWithAuth from "../src/hooks/useWithAuth";
 
 type formData = {
   user_id: string;
@@ -228,4 +229,4 @@ const GasPurchase: NextPage = () => {
   );
 };
 
-export default GasPurchase;
+export default useWithAuth(GasPurchase, false);

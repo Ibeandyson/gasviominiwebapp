@@ -10,6 +10,7 @@ import crypto from "crypto";
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
+import useWithAuth from "../src/hooks/useWithAuth";
 
 type formData = {
   _id: string;
@@ -27,6 +28,7 @@ type formData = {
 };
 
 const AddCustomer: NextPage = () => {
+ 
   const [formInput, setFormInput] = useState<formData>({
     _id: "",
     email: "",
@@ -79,31 +81,34 @@ const AddCustomer: NextPage = () => {
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      let data: any = localStorage.getItem("staff_data");
-      const md5Key = crypto
-        .createHash("md5")
-        .update(aeskey)
-        .digest("hex")
-        .substr(0, 24);
-      const decipher = crypto.createDecipheriv(
-        "des-ede3",
-        md5Key,
-        ivKey,
-        aeskey
-      );
-      let decrypted = decipher.update(data, "base64", "utf8");
-      decrypted += decipher.final("utf8");
-      const _staffData = JSON.parse(decrypted);
-      setFormInput({
-        ...formInput,
-        staffFirstName: _staffData.firstName,
-        staffLastName: _staffData.lastName,
-        staffRole: _staffData.role,
-      });
+      if (localStorage.getItem("staff_data")) {
+        let data: any = localStorage.getItem("staff_data");
+        const md5Key = crypto
+          .createHash("md5")
+          .update(aeskey)
+          .digest("hex")
+          .substr(0, 24);
+        const decipher = crypto.createDecipheriv(
+          "des-ede3",
+          md5Key,
+          ivKey,
+          aeskey
+        );
+        let decrypted = decipher.update(data, "base64", "utf8");
+        decrypted += decipher.final("utf8");
+        const _staffData = JSON.parse(decrypted);
+        setFormInput({
+          ...formInput,
+          staffFirstName: _staffData.firstName,
+          staffLastName: _staffData.lastName,
+          staffRole: _staffData.role,
+        });
+      }
     } else {
       return null;
     }
   }, []);
+
 
   return (
     <div>
@@ -283,4 +288,4 @@ const AddCustomer: NextPage = () => {
   );
 };
 
-export default AddCustomer;
+export default  useWithAuth(AddCustomer, false) ;

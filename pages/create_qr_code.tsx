@@ -8,6 +8,7 @@ import QRCode from "react-qr-code";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 import useCreateId from "../src/hooks/useCreateId";
+import useWithAuth from "../src/hooks/useWithAuth";
 
 const Home: NextPage = () => {
   const { uid, createId, setUid } = useCreateId();
@@ -87,4 +88,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default useWithAuth(Home, true);
