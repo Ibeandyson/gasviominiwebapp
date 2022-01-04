@@ -8,7 +8,7 @@ import useCustomer from "../src/hooks/useCustomer";
 import useStaff from "../src/hooks/useStaff";
 import dynamic from "next/dynamic";
 import crypto from "crypto";
-import useModal from "../src/hooks/useModal"
+import useModal from "../src/hooks/useModal";
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
@@ -32,7 +32,7 @@ type formData = {
 };
 
 const GasPurchase: NextPage = () => {
-  const { setModaleState } = useModal()
+  const { setModaleState } = useModal();
   const [formInput, setFormInput] = useState<formData>({
     user_id: "",
     email: "",
@@ -54,7 +54,6 @@ const GasPurchase: NextPage = () => {
     lastRefillDate: "",
     lastRefillKg: "",
   });
- 
 
   const { user_id, amount, refillKg } = formInput;
 
@@ -71,6 +70,7 @@ const GasPurchase: NextPage = () => {
       getOneUser(data);
     }
   };
+  
   const handleError = (err: any) => {
     console.error(err);
   };
@@ -93,16 +93,16 @@ const GasPurchase: NextPage = () => {
       lastRefillDate: oneCustomerData?.purchase?.lastRefillDate,
       lastRefillKg: oneCustomerData?.purchase?.lastRefillKg,
     });
-    // setModaleState(true)  
+    // setModaleState(true)
   }, [oneCustomerData]);
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     saleGas(formInput);
     updateOneUser({
-      lastRefillDate:  new Date(Date.now()),
+      lastRefillDate: new Date(Date.now()),
       lastRefillKg: refillKg,
-      user_id: user_id
+      user_id: user_id,
     });
   };
 
@@ -147,7 +147,7 @@ const GasPurchase: NextPage = () => {
       </Head>
       <Header />
       {loading && <Loader />}
-      <CustomerModal/>
+      <CustomerModal />
       <div className={styles.container}>
         <main className={styles.main}>
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
@@ -179,10 +179,11 @@ const GasPurchase: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Gas Kg</Form.Label>
                         <Form.Control
                           className="form"
                           type="number"
-                          placeholder="Gas Kg"
+                          placeholder="Enter Gas Kg"
                           name="refillKg"
                           value={refillKg}
                           min="1"
@@ -195,10 +196,11 @@ const GasPurchase: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Payable Amount</Form.Label>
                         <Form.Control
                           className="form"
                           type="number"
-                          placeholder="Payable Amount"
+                          placeholder="Enter Payable Amount"
                           name="amount"
                           min="1"
                           value={amount}

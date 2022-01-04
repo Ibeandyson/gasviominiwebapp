@@ -26,6 +26,7 @@ const useCustomer = () => {
   const [loading, setLoading] = useState(false)
   const [oneCustomer, setOneCustomer] = useState({})
   const [customer, setCustomer] = useState([])
+  const [customerCount, setCustomerCount] = useState('')
   const { useShowNotify } = useNotify()
   const { setModalShow } = useModal()
 
@@ -191,14 +192,40 @@ const useCustomer = () => {
       });
   }
 
+  const countCustomer = () => {
+    setLoading(true)
+    const options: AxiosRequestConfig<any> = {
+      url: `/api/customerCount`,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      }
+    };
+    axios(options)
+      .then((response: any) => {
+        setLoading(false)
+        setCustomerCount(response.data.data)
+        setModalShow(true)
+      })
+      .catch((err: any) => {
+        setLoading(false)
+        if (err.response.status === 500) {
+          useShowNotify("something went bad contact the engineer", "error")
+        }
+      });
+  }
+
   return {
     addCustomer,
     getOneUser,
     updateOneUser,
     getAllCustomer,
     fillerCustomer,
+    countCustomer,
     oneCustomerData: oneCustomer,
     customerData: customer,
+    customerCountData: customerCount,
     loading: loading,
   }
 }

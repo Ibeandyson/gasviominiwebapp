@@ -26,7 +26,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			success: true,
 		});
 
-
 	} catch (error: any) {
 		return res.status(500).json({
 			message: new Error(error).message,

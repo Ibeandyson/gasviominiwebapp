@@ -33,6 +33,8 @@ interface saleGasProps {
 const useStaff = () => {
 	const [loading, setLoading] = useState(false)
 	const { useShowNotify } = useNotify()
+	const [staffCount, setSaffCount] = useState()
+	const [purchaseCount, setPurchaseCount] = useState()
 
 
 	const addStaff = (data: addStaffProps) => {
@@ -128,9 +130,60 @@ const useStaff = () => {
 				}
 			});
 	};
+
+	const countStaff = () => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: `/api/staffCount`,
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			}
+		};
+		axios(options)
+			.then((response: any) => {
+				setLoading(false)
+				setSaffCount(response.data.data)
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
+				}
+			});
+	}
+
+	const countPurchase = () => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: `/api/purchaseCount`,
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			}
+		};
+		axios(options)
+			.then((response: any) => {
+				setLoading(false)
+				setPurchaseCount(response.data.data)
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
+				}
+			});
+	}
+
 	return {
 		addStaff,
 		saleGas,
+		countStaff,
+		countPurchase,
+		purchaseCountData: purchaseCount,
+		staffCountData: staffCount,
 		loading: loading,
 	}
 }

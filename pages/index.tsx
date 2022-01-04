@@ -1,35 +1,22 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
-import useLogin from "../src/hooks/useLogin";
+import useCustomer from "../src/hooks/useCustomer";
+import useStaff from "../src/hooks/useStaff";
 import useWithAuth from "../src/hooks/useWithAuth";
 
-
-type formData = {
-  email: string;
-  password: string;
-};
-
 const Home: NextPage = () => {
-  const [formInput, setFormInput] = useState<formData>({
-    email: "",
-    password: "",
-  });
-  const { email, password } = formInput;
+  const { countCustomer, customerCountData, loading } = useCustomer();
+  const {countStaff, countPurchase, staffCountData, purchaseCountData} = useStaff()
 
-  const onChangeHandler = (e: any) => {
-    setFormInput({ ...formInput, [e.target.name]: e.target.value });
-  };
-
-  const { login, loading } = useLogin();
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    login(formInput);
-  };
-
+  useEffect(() => {
+    countCustomer();
+    countStaff();
+    countPurchase();
+  }, []);
   return (
     <div>
       <Head>
@@ -40,36 +27,39 @@ const Home: NextPage = () => {
       <Header />
       {loading && <Loader />}
       <div className={styles.container}>
-        <main className={styles.main}>
-          <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-            <Card.Body>
-              <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
-                <Form.Control
-                  className="form"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => onChangeHandler(e)}
-                />
-              </Form.Group>
-              <Form.Group className="mb-5 mt-3" controlId="formBasicPassword">
-                <Form.Control
-                  className="form"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => onChangeHandler(e)}
-                />
-              </Form.Group>
-              <div className="d-grid">
-                <Button variant="primary" onClick={onSubmit}>
-                  Log in
-                </Button>
-              </div>
-            </Card.Body>
-          </Card>
+        <main className="mt-5">
+          <Row>
+            <Col sm="12" md="4">
+              <Card className="shadow-sm p-3 mb-5 bg-body rounde">
+                <Card.Header>Total Customers</Card.Header>
+                <Card.Body className="mt-3 text-center">
+                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                    {customerCountData}
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col sm="12" md="4">
+              <Card className="shadow-sm p-3 mb-5 bg-body rounde">
+                <Card.Header>Total Staffs</Card.Header>
+                <Card.Body className="mt-3 text-center">
+                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                    {staffCountData}
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col sm="12" md="4">
+            <Card className="shadow-sm p-3 mb-5 bg-body rounde">
+                <Card.Header>Total Gas Purchase</Card.Header>
+                <Card.Body className="mt-3 text-center">
+                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                    {purchaseCountData}
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
         </main>
       </div>
     </div>

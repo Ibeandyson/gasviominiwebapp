@@ -28,6 +28,7 @@ const Customers: NextPage = () => {
     getAllCustomer();
   }, []);
 
+
   return (
     <div>
       <Head>
@@ -47,7 +48,7 @@ const Customers: NextPage = () => {
             </Card.Header>
             <Card.Body>
               <div>
-                <InputGroup className="mb-4 mt-3">
+                <InputGroup className="shadow-lg mb-5 mt-3">
                   <SplitButton
                     variant="primary"
                     title="Apply"
@@ -91,6 +92,7 @@ const Customers: NextPage = () => {
                     </Dropdown.Item>
                   </SplitButton>
                   <FormControl
+                    type={query.name === "cylinderAge" ? "date" : "text"}
                     onChange={(e: any) =>
                       setQuery({ ...query, keyword: e.target.value })
                     }
@@ -116,34 +118,35 @@ const Customers: NextPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {customerData[0] !== null ?
-                      customerData?.map((data: any) => (
-                        <tr style={{ fontSize: "13px" }} key={data?._id}>
-                          <td>{data?.firstName}</td>
-                          <td>{data?.lastName}</td>
-                          <td>{data?.email}</td>
-                          <td>{data?.address}</td>
-                          <td>{data?.phone}</td>
-                          <td>{data?.cylinderSize} Kg</td>
-                          <td>
-                            <Moment fromNow ago>
-                              {data?.cylinderAge}
-                            </Moment>
-                          </td>
-                          {data?.purchase?.lastRefillDate === "none" ? (
-                            <td>{data?.purchase?.lastRefillDate}</td>
-                          ) : (
+                    {customerData[0] !== null
+                      ? customerData?.map((data: any) => (
+                          <tr style={{ fontSize: "13px" }} key={data?._id}>
+                            <td>{data?.firstName}</td>
+                            <td>{data?.lastName}</td>
+                            <td>{data?.email}</td>
+                            <td>{data?.address}</td>
+                            <td>{data?.phone}</td>
+                            <td>{data?.cylinderSize} Kg</td>
                             <td>
-                              <Moment fromNow>
-                                {data?.purchase?.lastRefillDate}
+                              <Moment fromNow ago>
+                                {data?.cylinderAge}
                               </Moment>
                             </td>
-                          )}
-                          <td>{data?.purchase?.lastRefillKg} kg</td>
-                          <td>{data?.staffData?.firstName}</td>
-                          <td>{data?.staffData?.role}</td>
-                        </tr>
-                      )): null}
+                            {data?.purchase?.lastRefillDate === "none" ? (
+                              <td>{data?.purchase?.lastRefillDate}</td>
+                            ) : (
+                              <td>
+                                <Moment fromNow>
+                                  {data?.purchase?.lastRefillDate}
+                                </Moment>
+                              </td>
+                            )}
+                            <td>{data?.purchase?.lastRefillKg} kg</td>
+                            <td>{data?.staffData?.firstName}</td>
+                            <td>{data?.staffData?.role}</td>
+                          </tr>
+                        ))
+                      : null}
                   </tbody>
                 </table>
               </div>

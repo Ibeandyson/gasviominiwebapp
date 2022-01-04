@@ -38,6 +38,15 @@ export default async (req: NextApiRequest, res: NextApiResponse,) => {
 			});
 		}
 
+		if (name === "cylinderAge") {
+			let date: any = keyword
+			const data = await db.collection('customer').find({ created_at: {"$gte": new Date(2021, 11, 4),"$lt": new Date(2022, 0, 4)  }}).toArray()
+			return res.status(200).json({
+				data: data,
+				success: true,
+			});
+		}
+
 	} catch (error: any) {
 		return res.status(500).json({
 			message: new Error(error).message,

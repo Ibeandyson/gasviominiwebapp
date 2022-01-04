@@ -10,8 +10,7 @@ const useWithAuth = (WrappedComponent, admin) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
       const currentPage = Router.pathname;
-			console.log(currentPage)
-			
+      console.log(currentPage);
 
       if (localStorage.getItem("staff_data")) {
         let data = localStorage.getItem("staff_data");
@@ -29,7 +28,6 @@ const useWithAuth = (WrappedComponent, admin) => {
         let decrypted = decipher.update(data, "base64", "utf8");
         decrypted += decipher.final("utf8");
         const access = JSON.parse(decrypted);
-				
 
         if (access.token === null || undefined) {
           Router.replace("/");
@@ -45,15 +43,14 @@ const useWithAuth = (WrappedComponent, admin) => {
             } else {
               Router.push("/not_found");
             }
-          }else{
-						return (
-							<div>
-								<WrappedComponent {...props} />
-							</div>
-						);
+          } else {
+            return (
+              <div>
+                <WrappedComponent {...props} />
+              </div>
+            );
           }
         }
-				
       } else {
         Router.replace("/");
       }
