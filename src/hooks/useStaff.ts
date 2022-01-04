@@ -176,12 +176,46 @@ const useStaff = () => {
 				}
 			});
 	}
+	const senBulKMails = (data: any) => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: `/api/send_bulk_emails`,
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			},
+			data: {
+				data,
+			}
+		};
+		axios(options)
+			.then((response: any) => {
+				setLoading(false)
+				useShowNotify(response?.data.message, "success")
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 400) {
+					if (err.response?.data.message) {
+						useShowNotify(err.response?.data.message, "error")
+					}
+					if (err.response?.data.subject) {
+						useShowNotify(err.response?.data.subject, "error")
+					}
+				}
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
+				}
+			});
+	}
 
 	return {
 		addStaff,
 		saleGas,
 		countStaff,
 		countPurchase,
+		senBulKMails,
 		purchaseCountData: purchaseCount,
 		staffCountData: staffCount,
 		loading: loading,

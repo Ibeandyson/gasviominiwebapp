@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/dom-to-image": "^2.6.4",
     "@types/file-saver": "^2.0.4",
