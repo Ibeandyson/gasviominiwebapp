@@ -5,12 +5,10 @@ import crypto from "crypto";
 let aeskey = "MvYiDO2ePasOLVcN";
 let ivKey = "RQBblIzmI3UhH0N9";
 
-const useWithAuth = (WrappedComponent, admin) => {
-  return (props) => {
+const useWithAuth = (WrappedComponent: any, admin: any) => {
+  return (props: any) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
-      const currentPage = Router.pathname;
-      console.log(currentPage);
 
       if (localStorage.getItem("staff_data")) {
         let data = localStorage.getItem("staff_data");
@@ -30,29 +28,21 @@ const useWithAuth = (WrappedComponent, admin) => {
         const access = JSON.parse(decrypted);
 
         if (access.token === null || undefined) {
-          Router.replace("/");
+          Router.replace("/login");
           return null;
         } else {
           if (admin === true) {
             if (access.role === "admin") {
-              return (
-                <div>
-                  <WrappedComponent {...props} />
-                </div>
-              );
+              return <WrappedComponent {...props} />;
             } else {
               Router.push("/not_found");
             }
           } else {
-            return (
-              <div>
-                <WrappedComponent {...props} />
-              </div>
-            );
+            return <WrappedComponent {...props} />;
           }
         }
       } else {
-        Router.replace("/");
+        Router.replace("/login");
       }
     }
     // If we are on server, return null

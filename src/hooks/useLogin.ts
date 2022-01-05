@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 
 //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
-let aeskey: string= "MvYiDO2ePasOLVcN";
+let aeskey: string = "MvYiDO2ePasOLVcN";
 let ivKey: string = "RQBblIzmI3UhH0N9";
 
 
@@ -56,7 +56,12 @@ const useStaff = () => {
                     );
                 }
                 setLoading(false)
-                Router.replace("/add_staff")
+                if (response.data.data.role === "admin") {
+                    Router.replace("/")
+                }else{
+                    Router.replace("/add_customer") 
+                }
+
             })
             .catch((err: any) => {
                 setLoading(false)

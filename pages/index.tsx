@@ -66,4 +66,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default useWithAuth(Home, true)

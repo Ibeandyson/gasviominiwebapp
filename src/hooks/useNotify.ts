@@ -1,9 +1,5 @@
 import { useToasts } from 'react-toast-notifications';
 
-// interface dataProps {
-//     value: string;
-//     mood: undefined;
-// }
 
 const useNoify = () => {
     const { addToast } = useToasts();
