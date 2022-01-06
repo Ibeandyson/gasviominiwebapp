@@ -39,8 +39,114 @@ export default async (req: NextApiRequest, res: NextApiResponse,) => {
 		}
 
 		if (name === "cylinderAge") {
-			let date: any = keyword
-			const data = await db.collection('customer').find({ created_at: {"$gte": new Date(2021, 11, 4),"$lt": new Date(2022, 0, 4)  }}).toArray()
+			let val: any = keyword
+			let date = new Date(val)
+			const data = await db.collection('customer').aggregate([
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateToParts': {
+								'date': {
+									'$toDate': '$cylinderAge'
+								}
+							}
+						}
+					}
+				},
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateFromParts': {
+								'year': '$created_at_converted.year',
+								'month': '$created_at_converted.month',
+								'day': '$created_at_converted.day'
+							}
+						}
+					}
+				},
+				{
+					'$match': {
+						'created_at_converted': date
+					}
+				}
+			]).toArray()
+			return res.status(200).json({
+				data: data,
+				success: true,
+			});
+		}
+
+
+		if (name === "created_at") {
+			let val: any = keyword
+			let date = new Date(val)
+			const data = await db.collection('customer').aggregate([
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateToParts': {
+								'date': {
+									'$toDate': '$created_at'
+								}
+							}
+						}
+					}
+				},
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateFromParts': {
+								'year': '$created_at_converted.year',
+								'month': '$created_at_converted.month',
+								'day': '$created_at_converted.day'
+							}
+						}
+					}
+				},
+				{
+					'$match': {
+						'created_at_converted': date
+					}
+				}
+			]).toArray()
+			return res.status(200).json({
+				data: data,
+				success: true,
+			});
+		}
+
+		if (name === "lastRefillDate") {
+			let val: any = keyword
+			let date = new Date(val)
+			const data = await db.collection('customer').aggregate([
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateToParts': {
+								'date': {
+									'$toDate': '$purchase.lastRefillDate'
+								}
+							}
+						}
+					}
+				},
+				{
+					'$addFields': {
+						'created_at_converted': {
+							'$dateFromParts': {
+								'year': '$created_at_converted.year',
+								'month': '$created_at_converted.month',
+								'day': '$created_at_converted.day'
+							}
+						}
+					}
+				},
+				{
+					'$match': {
+						'created_at_converted': date
+					}
+				}
+			]).toArray()
 			return res.status(200).json({
 				data: data,
 				success: true,

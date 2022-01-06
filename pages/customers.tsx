@@ -5,7 +5,6 @@ import styles from "../styles/Login.module.css";
 import {
   Button,
   Card,
-  Table,
   InputGroup,
   SplitButton,
   Dropdown,
@@ -27,7 +26,6 @@ const Customers: NextPage = () => {
   useEffect(() => {
     getAllCustomer();
   }, []);
-
 
   return (
     <div>
@@ -72,7 +70,7 @@ const Customers: NextPage = () => {
                         setQuery({ ...query, name: "cylinderSize" })
                       }
                     >
-                      By Size of cylinder
+                      By Size of Cylinder
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item
@@ -80,8 +78,25 @@ const Customers: NextPage = () => {
                         setQuery({ ...query, name: "cylinderAge" })
                       }
                     >
-                      By Age of cylinder
+                      By Age of Cylinder
                     </Dropdown.Item>
+
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      onClick={() => setQuery({ ...query, name: "created_at" })}
+                    >
+                      By Join Date
+                    </Dropdown.Item>
+
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      onClick={() =>
+                        setQuery({ ...query, name: "lastRefillDate" })
+                      }
+                    >
+                      By Last Refilled Date
+                    </Dropdown.Item>
+
                     <Dropdown.Divider />
                     <Dropdown.Item
                       onClick={() =>
@@ -92,7 +107,13 @@ const Customers: NextPage = () => {
                     </Dropdown.Item>
                   </SplitButton>
                   <FormControl
-                    type={query.name === "cylinderAge" ? "date" : "text"}
+                    type={
+                      query.name === "cylinderAge" ||
+                      query.name === "created_at" ||
+                      query.name === "lastRefillDate"
+                        ? "date"
+                        : "text"
+                    }
                     onChange={(e: any) =>
                       setQuery({ ...query, keyword: e.target.value })
                     }

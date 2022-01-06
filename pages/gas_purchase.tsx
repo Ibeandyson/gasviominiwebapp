@@ -8,7 +8,6 @@ import useCustomer from "../src/hooks/useCustomer";
 import useStaff from "../src/hooks/useStaff";
 import dynamic from "next/dynamic";
 import crypto from "crypto";
-import useModal from "../src/hooks/useModal";
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
@@ -32,7 +31,8 @@ type formData = {
 };
 
 const GasPurchase: NextPage = () => {
-  const { setModaleState } = useModal();
+  const [modalState, setModaleState] = useState(false);
+
   const [formInput, setFormInput] = useState<formData>({
     user_id: "",
     email: "",
@@ -70,7 +70,7 @@ const GasPurchase: NextPage = () => {
       getOneUser(data);
     }
   };
-  
+
   const handleError = (err: any) => {
     console.error(err);
   };
@@ -93,7 +93,12 @@ const GasPurchase: NextPage = () => {
       lastRefillDate: oneCustomerData?.purchase?.lastRefillDate,
       lastRefillKg: oneCustomerData?.purchase?.lastRefillKg,
     });
-    // setModaleState(true)
+  }, [oneCustomerData]);
+
+  useEffect(() => {
+    if (oneCustomerData !== null) {
+      setModaleState(true);
+    }
   }, [oneCustomerData]);
 
   const onSubmit = (e: any) => {
@@ -147,7 +152,7 @@ const GasPurchase: NextPage = () => {
       </Head>
       <Header />
       {loading && <Loader />}
-      <CustomerModal />
+      <CustomerModal hide={setModaleState} modalShow={modalState} data={oneCustomerData}/>
       <div className={styles.container}>
         <main className={styles.main}>
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">

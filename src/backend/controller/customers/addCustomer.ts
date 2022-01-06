@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const staffLastName = req.body.data.staffLastName
 	const staffRole = req.body.data.staffRole
 	const date: any = new Date(Date.now())
-	const nowDate = date.toString()
+	
 
 	try {
 		let { db } = await connectToDatabase();
@@ -43,9 +43,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				firstName: firstName,
 				lastName: lastName,
 				cylinderSize: cylinderSize,
-				cylinderAge: cylinderAge,
-				dob: dob,
-				created_at: nowDate,
+				cylinderAge: new Date(cylinderAge).toISOString(),
+				dob: new Date(dob).toISOString(),
+				created_at: date.toISOString(),
 				purchase: {
 					lastRefillDate: "none",
 					lastRefillKg: "none",

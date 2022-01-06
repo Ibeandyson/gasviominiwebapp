@@ -24,9 +24,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const refillDate = new Date(Date.now())
 	const refillKg = req.body.data.refillKg
 	const amount = req.body.data.amount
-
 	const date: any = new Date(Date.now())
-	const nowDate = date.toString()
+
 
 	try {
 		let { db } = await connectToDatabase();
@@ -40,11 +39,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				lastName: lastName,
 				cylinderSize: cylinderSize,
 				cylinderAge: cylinderAge,
-				created_at: nowDate,
+				created_at: date.toISOString(),
 				purchase: {
 					refillKg: refillKg,
 					amount: amount,
-					refillDate: refillDate
+					refillDate: refillDate.toISOString()
 				},
 				staffData: {
 					lastName: staffLastName,

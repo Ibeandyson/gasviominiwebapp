@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import useNotify from "../hooks/useNotify"
-import useModal from "../hooks/useModal"
+
 
 
 
@@ -24,11 +24,11 @@ interface addCustomerProps {
 
 const useCustomer = () => {
   const [loading, setLoading] = useState(false)
-  const [oneCustomer, setOneCustomer] = useState({})
+  const [oneCustomer, setOneCustomer] = useState(null)
   const [customer, setCustomer] = useState([])
   const [customerCount, setCustomerCount] = useState('')
   const { useShowNotify } = useNotify()
-  const { setModalShow } = useModal()
+
 
 
   const addCustomer = (data: addCustomerProps) => {
@@ -109,7 +109,6 @@ const useCustomer = () => {
       .then((response: any) => {
         setLoading(false)
         setOneCustomer(response.data.data)
-        setModalShow(true)
       })
       .catch((err: any) => {
         setLoading(false)
@@ -182,7 +181,6 @@ const useCustomer = () => {
       .then((response: any) => {
         setLoading(false)
         setCustomer(response.data.data)
-        setModalShow(true)
       })
       .catch((err: any) => {
         setLoading(false)
@@ -206,7 +204,6 @@ const useCustomer = () => {
       .then((response: any) => {
         setLoading(false)
         setCustomerCount(response.data.data)
-        setModalShow(true)
       })
       .catch((err: any) => {
         setLoading(false)

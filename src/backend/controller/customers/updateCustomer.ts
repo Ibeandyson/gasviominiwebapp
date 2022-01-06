@@ -8,14 +8,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const lastRefillDate = req.body.data.lastRefillDate
 	const lastRefillKg = req.body.data.lastRefillKg
 
-
-
 	try {
 		let { db } = await connectToDatabase();
 		await db.collection('customer').updateOne({ _id: _id }, {
 			$set: {
 				purchase: {
-					lastRefillDate: lastRefillDate,
+					lastRefillDate: new Date(lastRefillDate).toISOString(),
 					lastRefillKg: lastRefillKg,
 				}
 			}
