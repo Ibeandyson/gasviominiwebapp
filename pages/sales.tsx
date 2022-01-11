@@ -10,20 +10,19 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
-import useCustomer from "../src/hooks/useCustomer";
+import useStaff from "../src/hooks/useStaff";
 import Moment from "react-moment";
 import useWithAuth from "../src/hooks/useWithAuth";
 
-const Customers: NextPage = () => {
+const Sales: NextPage = () => {
   const [query, setQuery] = useState({
     name: "",
     keyword: "",
   });
-  const { getAllCustomer, customerData, fillerCustomer, loading } =
-    useCustomer();
+  const { getAllPurchase, fillerPurchase, purchaseData,  loading } = useStaff();
 
   useEffect(() => {
-    getAllCustomer();
+    getAllPurchase();
   }, []);
 
   return (
@@ -40,7 +39,7 @@ const Customers: NextPage = () => {
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
             <Card.Header>
               <Card.Title>
-                <b>Customers</b>
+                <b>Purchased Gas</b>
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -50,7 +49,7 @@ const Customers: NextPage = () => {
                     variant="primary"
                     title="Apply"
                     id="segmented-button-dropdown-1"
-                    onClick={() => fillerCustomer(query)}
+                    onClick={() => fillerPurchase(query)}
                   >
                     <Dropdown.Item
                       onClick={() => setQuery({ ...query, name: "_id" })}
@@ -84,32 +83,21 @@ const Customers: NextPage = () => {
                     <Dropdown.Item
                       onClick={() => setQuery({ ...query, name: "created_at" })}
                     >
-                      By Join Date
+                      By Date
                     </Dropdown.Item>
-
                     <Dropdown.Divider />
                     <Dropdown.Item
                       onClick={() =>
-                        setQuery({ ...query, name: "lastRefillDate" })
+                        setQuery({ ...query, name: "refillKg" })
                       }
                     >
-                      By Last Refilled Date
-                    </Dropdown.Item>
-
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      onClick={() =>
-                        setQuery({ ...query, name: "lastRefillKg" })
-                      }
-                    >
-                      By Last Refilled Kg
+                      Refilled Kg
                     </Dropdown.Item>
                   </SplitButton>
                   <FormControl
                     type={
                       query.name === "cylinderAge" ||
-                      query.name === "created_at" ||
-                      query.name === "lastRefillDate"
+                      query.name === "created_at" 
                         ? "date"
                         : "text"
                     }
@@ -129,6 +117,7 @@ const Customers: NextPage = () => {
                       <th>Email</th>
                       <th>Address</th>
                       <th>Phone</th>
+                      <th>Amount</th>
                       <th>Cylinder Size</th>
                       <th>Cylinder Age</th>
                       <th>Last Refill Date</th>
@@ -138,30 +127,31 @@ const Customers: NextPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {customerData[0] !== null
-                      ? customerData?.map((data: any) => (
+                    {purchaseData[0] !== null
+                      ? purchaseData?.map((data: any) => (
                           <tr style={{ fontSize: "13px" }} key={data?._id}>
                             <td>{data?.firstName}</td>
                             <td>{data?.lastName}</td>
                             <td>{data?.email}</td>
                             <td>{data?.address}</td>
                             <td>{data?.phone}</td>
+                            <td>{data?.purchase?.amount}</td>
                             <td>{data?.cylinderSize} Kg</td>
                             <td>
                               <Moment fromNow ago>
                                 {data?.cylinderAge}
                               </Moment>
                             </td>
-                            {data?.purchase?.lastRefillDate === "none" ? (
-                              <td>{data?.purchase?.lastRefillDate}</td>
+                            {data?.purchase?.refillDate === "none" ? (
+                              <td>{data?.purchase?.refillDate}</td>
                             ) : (
                               <td>
                                 <Moment fromNow>
-                                  {data?.purchase?.lastRefillDate}
+                                  {data?.purchase?.refillDate}
                                 </Moment>
                               </td>
                             )}
-                            <td>{data?.purchase?.lastRefillKg} kg</td>
+                            <td>{data?.purchase?.refillKg} kg</td>
                             <td>{data?.staffData?.firstName}</td>
                             <td>{data?.staffData?.role}</td>
                           </tr>
@@ -180,4 +170,4 @@ const Customers: NextPage = () => {
   );
 };
 
-export default useWithAuth(Customers, true);
+export default useWithAuth(Sales, true);

@@ -168,9 +168,8 @@ const useCustomer = () => {
 
   const fillerCustomer = (data: any) => {
     setLoading(true)
-
     const options: AxiosRequestConfig<any> = {
-      url: `/api/fillter_customer/${data.name}?keyword=${data.keyword}`,
+      url: `/api/filter_customer/${data.name}?keyword=${data.keyword}`,
       method: "GET",
       headers: {
         Accept: "application/json",

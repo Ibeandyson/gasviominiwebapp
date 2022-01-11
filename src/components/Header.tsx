@@ -79,6 +79,10 @@ const Header = () => {
                   <Link passHref href="/customers">
                     <NavDropdown.Item>Customers</NavDropdown.Item>
                   </Link>
+                  <NavDropdown.Divider />
+                  <Link passHref href="/sales">
+                    <NavDropdown.Item>Gas Sold</NavDropdown.Item>
+                  </Link>
                 </NavDropdown>
               )}
             </Nav>
