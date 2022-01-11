@@ -36,6 +36,7 @@ const useStaff = () => {
 	const [staffCount, setSaffCount] = useState()
 	const [purchaseCount, setPurchaseCount] = useState()
 	const [purchase, setPurchase] = useState([])
+	const [staffs, setStaffs] = useState([])
 
 
 	const addStaff = (data: addStaffProps) => {
@@ -255,6 +256,51 @@ const useStaff = () => {
 				}
 			});
 	}
+	const getAllStaffs = () => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: "/api/staff",
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			}
+		};
+		axios(options)
+			.then((response: any) => {
+				setLoading(false)
+				setStaffs(response.data.data)
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
+				}
+			});
+	}
+
+	const fillerStaff = (data: any) => {
+		setLoading(true)
+		const options: AxiosRequestConfig<any> = {
+			url: `/api/filter_staff/${data.name}?keyword=${data.keyword}`,
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=UTF-8",
+			}
+		};
+		axios(options)
+			.then((response: any) => {
+				setLoading(false)
+				setStaffs(response.data.data)
+			})
+			.catch((err: any) => {
+				setLoading(false)
+				if (err.response.status === 500) {
+					useShowNotify("something went bad contact the engineer", "error")
+				}
+			});
+	}
 
 	return {
 		addStaff,
@@ -264,9 +310,12 @@ const useStaff = () => {
 		senBulKMails,
 		getAllPurchase,
 		fillerPurchase,
+		getAllStaffs,
+		fillerStaff,
 		purchaseData: purchase,
 		purchaseCountData: purchaseCount,
 		staffCountData: staffCount,
+		staffsData: staffs,
 		loading: loading,
 	}
 }

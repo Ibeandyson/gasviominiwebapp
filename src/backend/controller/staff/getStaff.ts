@@ -1,16 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from "../../../../lib/mongodb";
 
-type resData = {
-    message: string;
-    success: boolean;
-}
-export default async (req: NextApiRequest, res: NextApiResponse<resData>) => {
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         let { db } = await connectToDatabase();
-        await db.collection('staff').insertOne(req.body.data);
+        const data = await db.collection('staff').find({}).toArray()
         return res.status(200).json({
-            message: 'Customer added successfully',
+            data: data,
             success: true,
         });
     } catch (error: any) {
