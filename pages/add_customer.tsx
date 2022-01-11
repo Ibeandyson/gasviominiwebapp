@@ -150,6 +150,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>First Name</Form.Label>
                         <Form.Control
                           className="form"
                           type="text"
@@ -165,6 +166,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Last Name</Form.Label>
                         <Form.Control
                           className="form"
                           type="text"
@@ -180,6 +182,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                           className="form"
                           type="number"
@@ -195,6 +198,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Address</Form.Label>
                         <Form.Control
                           className="form"
                           type="text"
@@ -210,6 +214,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Email</Form.Label>
                         <Form.Control
                           className="form"
                           type="email"
@@ -225,6 +230,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Date of Birth</Form.Label>
                         <Form.Control
                           className="form"
                           type="date"
@@ -240,6 +246,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Cylinder Age</Form.Label>
                         <Form.Control
                           className="form"
                           type="date"
@@ -255,6 +262,7 @@ const AddCustomer: NextPage = () => {
                         className="mb-5 mt-3"
                         controlId="formBasicEmail"
                       >
+                        <Form.Label>Cylinder Size</Form.Label>
                         <Form.Control
                           className="form"
                           type="number"
@@ -267,7 +275,7 @@ const AddCustomer: NextPage = () => {
                       </Form.Group>
                     </Col>
                     <Col sm={12} md={4}>
-                      <div className="text-center">
+                      <div className="text-center mt-4">
                         <Button
                           className="mb-5 mt-3"
                           variant="primary"

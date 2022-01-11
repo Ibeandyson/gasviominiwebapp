@@ -71,6 +71,7 @@ const AddStaff: NextPage = () => {
               <Row>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>First Name</Form.Label>
                     <Form.Control
                       className="form"
                       type="text"
@@ -83,6 +84,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Last Name</Form.Label>
                     <Form.Control
                       className="form"
                       type="text"
@@ -95,6 +97,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Phone</Form.Label>
                     <Form.Control
                       className="form"
                       type="number"
@@ -107,6 +110,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Address</Form.Label>
                     <Form.Control
                       className="form"
                       type="text"
@@ -119,6 +123,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Email</Form.Label>
                     <Form.Control
                       className="form"
                       type="email"
@@ -131,6 +136,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Password</Form.Label>
                     <Form.Control
                       className="form"
                       type="password"
@@ -143,6 +149,7 @@ const AddStaff: NextPage = () => {
                 </Col>
                 <Col sm={12} md={4}>
                   <Form.Group className="mb-5 mt-3" controlId="formBasicEmail">
+                  <Form.Label>Comfirm Password</Form.Label>
                     <Form.Control
                       className="form"
                       type="password"
@@ -154,6 +161,7 @@ const AddStaff: NextPage = () => {
                   </Form.Group>
                 </Col>
                 <Col sm={12} md={4}>
+                <Form.Label>Staff Role</Form.Label>
                   <Form.Select
                     className="mb-5 mt-3"
                     name="role"
@@ -166,9 +174,9 @@ const AddStaff: NextPage = () => {
                   </Form.Select>
                 </Col>
                 <Col sm={12} md={4}>
-                  <div style={{ float: "right" }}>
+                  <div className="text-center">
                     <Button
-                      className="mb-5 mt-3"
+                      className="mb-5 mt-5"
                       variant="primary"
                       onClick={onSubmit}
                     >
