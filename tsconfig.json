@@ -14,7 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "ignoreBuildErrors": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/backend/middleware/auth.js", "src/hooks/useWithAuth.tsx"],
   "exclude": ["node_modules"]
