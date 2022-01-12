@@ -5,7 +5,7 @@ import { connectToDatabase } from "../../../../lib/mongodb";
 import validateLoginInput from '../../Validation/login'
 const jwtSecret = 'SUPERSECRETE2021';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const login =  async (req: NextApiRequest, res: NextApiResponse) => {
 	const { errors, isValid } = validateLoginInput(req.body.data);
 	if (!isValid) {
 		return res.status(400).json(errors);
@@ -62,3 +62,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 }
+
+export default login
