@@ -1,6 +1,6 @@
 import {
  login
-} from "../../src/backend/controller/auth"
+} from "../../src/backend/controller/auth/index"
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req:  NextApiRequest, res:  NextApiResponse) {
