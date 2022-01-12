@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken"
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse , NextApiHandler} from 'next'
 import { connectToDatabase } from "../../../../lib/mongodb";
 import validateLoginInput from '../../Validation/login'
 const jwtSecret = 'SUPERSECRETE2021';
 
-const login =  async (req: NextApiRequest, res: NextApiResponse) => {
+const login: NextApiHandler =  async (req: NextApiRequest, res: NextApiResponse) => {
 	const { errors, isValid } = validateLoginInput(req.body.data);
 	if (!isValid) {
 		return res.status(400).json(errors);
