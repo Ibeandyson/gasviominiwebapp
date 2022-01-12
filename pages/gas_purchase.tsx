@@ -57,7 +57,7 @@ const GasPurchase: NextPage = () => {
 
   const { user_id, amount, refillKg } = formInput;
 
-  const { loading, getOneUser, oneCustomerData, updateOneUser } = useCustomer();
+  const { loading, getOneUser, oneCustomerData, updateOneUser }: any = useCustomer();
 
   const { saleGas } = useStaff();
 
@@ -112,8 +112,8 @@ const GasPurchase: NextPage = () => {
   };
 
   //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
-  let aeskey = "MvYiDO2ePasOLVcN";
-  let ivKey = "RQBblIzmI3UhH0N9";
+  let aeskey: any= "MvYiDO2ePasOLVcN";
+  let ivKey: any = "RQBblIzmI3UhH0N9";
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -139,7 +139,7 @@ const GasPurchase: NextPage = () => {
         staffRole: _staffData.role,
       });
     } else {
-      return null;
+      return undefined;
     }
   }, []);
 

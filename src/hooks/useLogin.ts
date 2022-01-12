@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 
 //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
-let aeskey: string = "MvYiDO2ePasOLVcN";
-let ivKey: string = "RQBblIzmI3UhH0N9";
+let aeskey: any = "MvYiDO2ePasOLVcN";
+let ivKey:any = "RQBblIzmI3UhH0N9";
 
 
 interface addStaffProps {

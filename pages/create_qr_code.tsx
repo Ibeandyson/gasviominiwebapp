@@ -15,8 +15,9 @@ const Home: NextPage = () => {
 
   const downloadHandler = (event: any) => {
     event.preventDefault();
+    let doc : any = document.getElementById("qr-code")
     domtoimage
-      .toBlob(document.getElementById("qr-code", { width: 1080, height: 1080 }))
+      .toBlob(doc)
       .then((blob) => {
         saveAs(blob, `${uid}`);
       });

@@ -76,8 +76,8 @@ const AddCustomer: NextPage = () => {
   };
 
   //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
-  let aeskey = "MvYiDO2ePasOLVcN";
-  let ivKey = "RQBblIzmI3UhH0N9";
+  let aeskey: any = "MvYiDO2ePasOLVcN";
+  let ivKey: any = "RQBblIzmI3UhH0N9";
 
   useEffect(() => {
     if (typeof window !== undefined) {

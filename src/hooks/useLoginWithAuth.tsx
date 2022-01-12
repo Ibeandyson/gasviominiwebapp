@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 
 //LOCAL STORAGE ENCRYPTION AND DECYPTION keys
-let aeskey = "MvYiDO2ePasOLVcN";
-let ivKey = "RQBblIzmI3UhH0N9";
+let aeskey: any = "MvYiDO2ePasOLVcN";
+let ivKey: any = "RQBblIzmI3UhH0N9";
 
 const useLoginWithAuth = (WrappedComponent: any) => {
   return (props: any) => {
@@ -11,7 +11,7 @@ const useLoginWithAuth = (WrappedComponent: any) => {
       const Router = useRouter();
 
       if (localStorage.getItem("staff_data")) {
-        let data = localStorage.getItem("staff_data");
+        let data: any = localStorage.getItem("staff_data");
         const md5Key = crypto
           .createHash("md5")
           .update(aeskey)
