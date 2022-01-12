@@ -6,7 +6,7 @@ import useStaff from "../src/hooks/useStaff";
 import styles from "../styles/AddStaff.module.css";
 import useCustomer from "../src/hooks/useCustomer";
 
-const send_mail = () => {
+const SendMail = () => {
   const { loading, customerData, getAllCustomer } = useCustomer();
   const { senBulKMails } = useStaff();
   const [formInput, setFormInput] = useState({
@@ -114,4 +114,4 @@ const send_mail = () => {
   );
 };
 
-export default send_mail;
+export default SendMail;

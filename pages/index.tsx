@@ -6,7 +6,7 @@ import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import useCustomer from "../src/hooks/useCustomer";
 import useStaff from "../src/hooks/useStaff";
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 const Home: NextPage = () => {
   const { countCustomer, customerCountData, loading } = useCustomer();
@@ -66,4 +66,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default useWithAuth(Home, true)
+export default withAuth(Home, true)

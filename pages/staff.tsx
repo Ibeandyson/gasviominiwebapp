@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import useStaff from "../src/hooks/useStaff";
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 const Staff: NextPage = () => {
   const [query, setQuery] = useState({
@@ -110,4 +110,4 @@ const Staff: NextPage = () => {
   );
 };
 
-export default useWithAuth(Staff, true);
+export default withAuth(Staff, true);

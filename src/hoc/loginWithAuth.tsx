@@ -5,7 +5,7 @@ import crypto from "crypto";
 let aeskey: any = "MvYiDO2ePasOLVcN";
 let ivKey: any = "RQBblIzmI3UhH0N9";
 
-const useLoginWithAuth = (WrappedComponent: any) => {
+const loginWithAuth = (WrappedComponent: any) => {
   return (props: any) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
@@ -39,4 +39,4 @@ const useLoginWithAuth = (WrappedComponent: any) => {
   };
 };
 
-export default useLoginWithAuth;
+export default loginWithAuth;

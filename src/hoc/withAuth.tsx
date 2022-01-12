@@ -5,11 +5,11 @@ import crypto from "crypto";
 let aeskey: any = "MvYiDO2ePasOLVcN";
 let ivKey: any  = "RQBblIzmI3UhH0N9";
 
-const useWithAuth = (WrappedComponent: any, admin: any) => {
-  return (props: any) => {
+const withAuth = (WrappedComponent: any, admin: any) => {
+  return(props: any) => {
+  const Router = useRouter();
     if (typeof window !== "undefined") {
-      const Router = useRouter();
-
+  
       if (localStorage.getItem("staff_data")) {
         let data: any = localStorage.getItem("staff_data");
         const md5Key = crypto
@@ -33,12 +33,13 @@ const useWithAuth = (WrappedComponent: any, admin: any) => {
         } else {
           if (admin === true) {
             if (access.role === "admin") {
-              return <WrappedComponent {...props} />;
+              return <WrappedComponent  {...props} />;
             } else {
               Router.push("/not_found");
             }
           } else {
-            return <WrappedComponent {...props} />;
+            return <WrappedComponent  {...props} />;
+  
           }
         }
       } else {
@@ -47,7 +48,7 @@ const useWithAuth = (WrappedComponent: any, admin: any) => {
     }
     // If we are on server, return null
     return null;
-  };
+  }
 };
 
-export default useWithAuth;
+export default withAuth;

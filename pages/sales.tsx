@@ -12,7 +12,7 @@ import {
 import { Header, Loader } from "../src/components";
 import useStaff from "../src/hooks/useStaff";
 import Moment from "react-moment";
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 const Sales: NextPage = () => {
   const [query, setQuery] = useState({
@@ -175,4 +175,4 @@ const Sales: NextPage = () => {
   );
 };
 
-export default useWithAuth(Sales, true);
+export default withAuth(Sales, true);

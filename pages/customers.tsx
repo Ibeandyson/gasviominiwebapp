@@ -12,7 +12,7 @@ import {
 import { Header, Loader } from "../src/components";
 import useCustomer from "../src/hooks/useCustomer";
 import Moment from "react-moment";
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 const Customers: NextPage = () => {
   const [query, setQuery] = useState({
@@ -180,4 +180,4 @@ const Customers: NextPage = () => {
   );
 };
 
-export default useWithAuth(Customers, true);
+export default withAuth(Customers, true);

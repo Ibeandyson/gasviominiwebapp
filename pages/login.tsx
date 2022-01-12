@@ -5,7 +5,7 @@ import styles from "../styles/Login.module.css";
 import { Form, Button, Card } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import useLogin from "../src/hooks/useLogin";
-import useLoginWithAuth from "../src/hooks/useLoginWithAuth";
+import loginWithAuth from "../src/hoc/loginWithAuth";
 
 type formData = {
   email: string;
@@ -75,4 +75,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default useLoginWithAuth(Login)
+export default loginWithAuth(Login)

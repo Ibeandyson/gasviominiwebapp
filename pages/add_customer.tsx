@@ -10,7 +10,7 @@ import crypto from "crypto";
 const QrReader = dynamic(() => import("react-qr-reader"), {
   ssr: false,
 });
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 type formData = {
   _id: string;
@@ -297,4 +297,4 @@ const AddCustomer: NextPage = () => {
   );
 };
 
-export default  useWithAuth(AddCustomer, false) ;
+export default  withAuth(AddCustomer, false) ;

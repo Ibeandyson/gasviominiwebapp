@@ -5,7 +5,7 @@ import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Header, Loader } from "../src/components";
 import styles from "../styles/AddStaff.module.css";
 import useStaff from "../src/hooks/useStaff";
-import useWithAuth from "../src/hooks/useWithAuth";
+import withAuth from "../src/hoc/withAuth";
 
 type formData = {
   email: string;
@@ -193,4 +193,4 @@ const AddStaff: NextPage = () => {
   );
 };
 
-export default useWithAuth(AddStaff, true);
+export default withAuth(AddStaff, true);
