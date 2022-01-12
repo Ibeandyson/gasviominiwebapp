@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
@@ -103,9 +103,10 @@ const AddCustomer: NextPage = () => {
           staffLastName: _staffData.lastName,
           staffRole: _staffData.role,
         });
+        console.log("dkk",_staffData)
       }
     } else {
-      return null;
+      return undefined
     }
   }, []);
 

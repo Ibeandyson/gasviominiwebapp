@@ -25,6 +25,11 @@ const Sales: NextPage = () => {
     getAllPurchase();
   }, []);
 
+  let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'NGN',
+  });
+
   return (
     <div>
       <Head>
@@ -135,7 +140,7 @@ const Sales: NextPage = () => {
                             <td>{data?.email}</td>
                             <td>{data?.address}</td>
                             <td>{data?.phone}</td>
-                            <td>{data?.purchase?.amount}</td>
+                            <td>{formatter.format(data?.purchase?.amount)}</td>
                             <td>{data?.cylinderSize} Kg</td>
                             <td>
                               <Moment fromNow ago>
