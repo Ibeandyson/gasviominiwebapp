@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   const [role, setRole] = useState("");
+  const [token, setToken] = useState(false);
   const Router = useRouter();
   const logout = () => {
     localStorage.removeItem("staff_data");
@@ -34,6 +35,9 @@ const Header = () => {
         decrypted += decipher.final("utf8");
         const access = JSON.parse(decrypted);
         setRole(access.role);
+        if (access.token) {
+          setToken(true);
+        }
       }
     }
   }, []);
@@ -42,10 +46,13 @@ const Header = () => {
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Gasvio-Protal</Navbar.Brand>
+          <Navbar.Brand href={role === "admin" ? "/" : "staff_home"}>
+            Gas-Vio Portal
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto"></Nav>
+            <Nav>
               {role === "attendant" && (
                 <NavDropdown title="Gas Attendant" id="collasible-nav-dropdown">
                   <Link passHref href="/add_customer">
@@ -53,7 +60,7 @@ const Header = () => {
                   </Link>
                   <NavDropdown.Divider />
                   <Link passHref href="/gas_purchase">
-                    <NavDropdown.Item>Gas Purchase</NavDropdown.Item>
+                    <NavDropdown.Item>Sell Gas</NavDropdown.Item>
                   </Link>
                 </NavDropdown>
               )}
@@ -73,7 +80,7 @@ const Header = () => {
                   </Link>
                   <NavDropdown.Divider />
                   <Link passHref href="/gas_purchase">
-                    <NavDropdown.Item>Gas Purchase</NavDropdown.Item>
+                    <NavDropdown.Item>Sell Gas</NavDropdown.Item>
                   </Link>
                   <NavDropdown.Divider />
                   <Link passHref href="/customers">
@@ -89,11 +96,14 @@ const Header = () => {
                   </Link>
                 </NavDropdown>
               )}
-            </Nav>
-            <Nav>
-              <Nav.Link eventKey={2} href="#memes">
-               <Button variant="light" onClick={logout}>logout </Button>
-              </Nav.Link>
+
+              {token && (
+                <Nav.Link eventKey={2} href="#memes">
+                  <Button variant="light" onClick={logout}>
+                    logout{" "}
+                  </Button>
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

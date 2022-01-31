@@ -81,6 +81,7 @@ const Staff: NextPage = () => {
                       <th>Email</th>
                       <th>Address</th>
                       <th>Phone</th>
+                      <th>Password</th>
                       <th>Role</th>
                     </tr>
                   </thead>
@@ -93,6 +94,7 @@ const Staff: NextPage = () => {
                             <td>{data?.email}</td>
                             <td>{data?.address}</td>
                             <td>{data?.phone}</td>
+                            <td>{data?.password}</td>
                             <td>{data?.role}</td>
                           </tr>
                         ))

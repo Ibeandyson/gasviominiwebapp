@@ -59,7 +59,7 @@ const useStaff = () => {
                 if (response.data.data.role === "admin") {
                     Router.replace("/")
                 }else{
-                    Router.replace("/add_customer") 
+                    Router.replace("/staff_home") 
                 }
 
             })

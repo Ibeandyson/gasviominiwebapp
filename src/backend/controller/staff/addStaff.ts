@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectToDatabase } from "../../../../lib/mongodb";
 import validateRegisterInput from '../../Validation/signup'
-import bcrypt from 'bcryptjs'
+// import bcrypt from 'bcryptjs'
 
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(403).json({ emailError: 'The email has already been used' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password, 10);
         await db.collection('staff').insertOne(
             {
                 email: email,
@@ -36,7 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 address: address,
                 firstName: firstName,
                 lastName: lastName,
-                password: hashedPassword,
+                password: password,
                 role: role,
                 created_at: date.toISOString(),
             }

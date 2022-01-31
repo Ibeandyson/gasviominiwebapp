@@ -158,7 +158,7 @@ const GasPurchase: NextPage = () => {
           <Card className="shadow-sm p-3 mb-5 bg-body rounde">
             <Card.Header>
               <Card.Title>
-                <b>Customer Gas Purchase</b>
+                <b>Sell Gas</b>
               </Card.Title>
             </Card.Header>
             <Card.Body>

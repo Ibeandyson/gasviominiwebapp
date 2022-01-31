@@ -51,7 +51,7 @@ const Home: NextPage = () => {
             </Col>
             <Col sm="12" md="4">
             <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-                <Card.Header>Total Gas Purchase</Card.Header>
+                <Card.Header>Total Gas Sold</Card.Header>
                 <Card.Body className="mt-3 text-center">
                   <p style={{ fontSize: "30px", fontWeight: "500" }}>
                     {purchaseCountData}
