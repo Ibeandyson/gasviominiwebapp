@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
@@ -7,16 +7,19 @@ import { Header, Loader } from "../src/components";
 import useCustomer from "../src/hooks/useCustomer";
 import useStaff from "../src/hooks/useStaff";
 import withAuth from "../src/hoc/withAuth";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const { countCustomer, customerCountData, loading } = useCustomer();
-  const {countStaff, countPurchase, staffCountData, purchaseCountData} = useStaff()
+  const { countStaff, countPurchase, staffCountData, purchaseCountData } =
+    useStaff();
 
   useEffect(() => {
     countCustomer();
     countStaff();
     countPurchase();
   }, []);
+
   return (
     <div>
       <Head>
@@ -29,35 +32,41 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         <main className="mt-5">
           <Row>
-            <Col sm="12" md="4">
-              <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-                <Card.Header>Total Customers</Card.Header>
-                <Card.Body className="mt-3 text-center">
-                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
-                    {customerCountData}
-                  </p>
-                </Card.Body>
-              </Card>
+            <Col  sm="12" md="4">
+              <Link passHref href="/customers">
+                <Card className="link__pointer shadow-sm p-3 mb-5 bg-body rounde">
+                  <Card.Header>Total Customers</Card.Header>
+                  <Card.Body className="mt-3 text-center">
+                    <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                      {customerCountData}
+                    </p>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
             <Col sm="12" md="4">
-              <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-                <Card.Header>Total Staffs</Card.Header>
-                <Card.Body className="mt-3 text-center">
-                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
-                    {staffCountData}
-                  </p>
-                </Card.Body>
-              </Card>
+              <Link passHref href="/staff">
+                <Card className=" link__pointer shadow-sm p-3 mb-5 bg-body rounde">
+                  <Card.Header>Total Staffs</Card.Header>
+                  <Card.Body className="mt-3 text-center">
+                    <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                      {staffCountData}
+                    </p>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
             <Col sm="12" md="4">
-            <Card className="shadow-sm p-3 mb-5 bg-body rounde">
-                <Card.Header>Total Gas Sold</Card.Header>
-                <Card.Body className="mt-3 text-center">
-                  <p style={{ fontSize: "30px", fontWeight: "500" }}>
-                    {purchaseCountData}
-                  </p>
-                </Card.Body>
-              </Card>
+              <Link passHref href="/sales">
+                <Card className=" link__pointer shadow-sm p-3 mb-5 bg-body rounde">
+                  <Card.Header>Total Gas Kg Sold</Card.Header>
+                  <Card.Body className="mt-3 text-center">
+                    <p style={{ fontSize: "30px", fontWeight: "500" }}>
+                      {purchaseCountData}
+                    </p>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
           </Row>
         </main>
@@ -66,4 +75,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default withAuth(Home, true)
+export default withAuth(Home, true);
